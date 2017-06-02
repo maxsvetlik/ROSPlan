@@ -40,10 +40,14 @@ namespace KCL_rosplan {
 		Waypoint(const std::string &id, unsigned int xCoord, unsigned int yCoord, const nav_msgs::MapMetaData& map_meta_data)
 			: wpID(id), grid_x(xCoord), grid_y(yCoord) {
 			occupancy_grid_utils::Cell cell;
-			cell.x = grid_x;
+			
+            cell.x = grid_x;
 			cell.y = grid_y;
 			
-			geometry_msgs::Point real_point = occupancy_grid_utils::cellCenter(map_meta_data, cell);
+			geometry_msgs::Point real_point; // occupancy_grid_utils::cellCenter(map_meta_data, cell);
+            real_point.x = xCoord;
+            real_point.y = yCoord;
+
 			real_x = real_point.x;
 			real_y = real_point.y;
 		}

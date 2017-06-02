@@ -356,10 +356,11 @@ namespace KCL_rosplan {
 		clearWaypoint(req.id);
 
 		// add new waypoint
-		occupancy_grid_utils::Cell start_cell = occupancy_grid_utils::pointCell(map.info, req.waypoint.pose.position);
-		Waypoint* new_wp = new Waypoint(req.id, start_cell.x, start_cell.y, map.info);
+		//occupancy_grid_utils::Cell start_cell = occupancy_grid_utils::pointCell(map.info, req.waypoint.pose.position);
+		Waypoint* new_wp = new Waypoint(req.id, req.waypoint.pose.position.x, req.waypoint.pose.position.y, map.info);
 		waypoints[new_wp->wpID] = new_wp;
 
+        /*
 		// connect to neighbours
 		geometry_msgs::Point p1, p2;
 		p1.x = new_wp->real_x;
@@ -386,7 +387,7 @@ namespace KCL_rosplan {
 				}
 			}
 		}
-
+        */
 
 		// instance
 		rosplan_knowledge_msgs::KnowledgeUpdateService updateSrv;
@@ -405,6 +406,7 @@ namespace KCL_rosplan {
 		
 		ROS_INFO("Process the %lu neighbours of this new waypoint.", new_wp->neighbours.size());
 			
+        /*
 		// predicates
 		for (std::vector<std::string>::iterator nit=new_wp->neighbours.begin(); nit!=new_wp->neighbours.end(); ++nit) {
 			// connected new->old
@@ -462,7 +464,7 @@ namespace KCL_rosplan {
 			updateFuncSrv.request.knowledge.function_value = dist;
 			update_knowledge_client.call(updateFuncSrv);
 		}
-
+        */
 		//data
 		std::string id(message_store.insertNamed(req.id, req.waypoint));
 		db_name_map[new_wp->wpID] = id;
